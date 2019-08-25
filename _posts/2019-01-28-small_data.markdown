@@ -1,0 +1,10 @@
+---
+layout: post
+title: Modern Neural Networks Generalize on Small Data Sets
+coauthor: Abraham J. Wyner and Richard Berk
+subtitle:
+---
+
+In this paper, we use a linear program to empirically decompose fitted neural net- works into ensembles of low-bias sub-networks. We show that these sub-networks are relatively uncorrelated which leads to an internal regularization process, very much like a random forest, which can explain why a neural network is surprisingly resistant to overfitting. We then demonstrate this in practice by applying large neural networks, with hundreds of parameters per training observation, to a collection of 116 real-world data sets from the UCI Machine Learning Repository. This collection of data sets contains a much smaller number of training examples than the types of image classification tasks generally studied in the deep learning literature, as well as non-trivial label noise. We show that even in this setting deep neural nets are capable of achieving superior classification accuracy without overfitting.
+
+[paper](/assets/small_data.pdf)

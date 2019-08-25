@@ -1,0 +1,11 @@
+---
+layout: post
+title: JOUSBoost, An R Package for Improving Machine Learning Classifier Probability Estimates
+subtitle:
+---
+
+Machine learning classifiers, such as AdaBoost, are often able to achieve superior misclassification error on a vast range of binary classification problems. However, these same algorithms often produce poor conditional class probability estimates. It is shown in Mease et al. (2007) that any classifier which achieves the Bayes error rate can be turned into a good probability estimator by fitting the classifier to different re-weightings of the original data set. The authors call this procedure JOUS, whose name derives from the steps of Jittering the training data, along with Over/Under-Sampling. The original paper applied this algorithm successfully to the AdaBoost classifier.
+This paper describes an implementation of the JOUS algorithm in the R package JOUSBoost (Olson 2017). The package allows the user to apply JOUS to a generic classifier in order to produce probability estimates. This is useful not only for improving a classifier’s existing probability estimates, but also for producing probability estimates for classifiers that have no natural probability output. The JOUSBoost package also contains an efficient implementation of AdaBoost. JOUSBoost is available from the Comprehensive R Archive Network (CRAN) at [https://CRAN.R-project.org/package=JOUSBoost](https://CRAN.R-project.org/package=JOUSBoost).
+
+[paper](/assets/jous.pdf)
+[package](https://CRAN.R-project.org/package=JOUSBoost)

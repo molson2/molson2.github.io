@@ -1,0 +1,10 @@
+---
+layout: post
+title: Generalizations of the Random Forest Kernel
+coauthor: Abraham J. Wyner, Adam Kapelner, and Richard Berk
+subtitle:
+---
+
+A random forest contains an implicit measure of similarity between points in the input space known as the proximity function. The proximity function simply gives the fraction of trees in a forest for which two points fall in the same terminal node. While useful in a great number of applications, this measure is also quite crude, as it ignores all of the information contained in a tree other than its ter- minal nodes, such as the quality and depth of its splits. In this paper, we construct a rich class of kernels derived from a random forest which generalize the proximity function. Moreover, we demonstrate that these kernels are useful alternatives to the proximity function in probability estimation and visualization examples.
+
+[paper](/assets/rf_kernel.pdf)

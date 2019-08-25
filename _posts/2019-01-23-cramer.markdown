@@ -1,0 +1,10 @@
+---
+layout: post
+title: Jim Cramer’s ‘Mad Money’ Charitable Trust Performance and Factor Attribution
+coauthor: Jonathan S. Hartley
+subtitle:
+---
+
+This study analyzes the complete historical performance of Jim Cramer’s Action Alerts PLUS portfolio from 2001 to 2016 which includes many of the stock recommendations made on Cramer’s TV show “Mad Money.” Both since inception of the portfolio and since the start of “Mad Money” in 2005 (when it was converted into a charitable trust), Cramer’s portfolio has underperformed the S&P 500 total return index and a basket of S&P 500 stocks that does not reinvest dividends (both on an overall returns basis and in Sharpe ratio). These findings contrast with previous studies which analyzed Cramer’s outperformance in short windows before the 2008 financial crisis. Using factor analysis, we find that Cramer’s portfolio returns are primarily driven by underlevered exposure to market returns and in some specifications tilting toward small cap stocks, growth stocks and stocks with low quality of earnings. These results have broad implications for market efficiency, the usefulness of single name stock recommendations made on television, financial education, and the implementation of academic factors thematic in Crame’s portfolio.
+
+[paper](/assets/cramer.pdf)
