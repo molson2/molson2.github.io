@@ -10,17 +10,17 @@ title: research
 
   {{ content }}
 
-  {%- if site.posts.size > 0 -%}
+  {%- if site.papers.size > 0 -%}
     <ul class="post-list">
-      {%- for post in site.posts -%}
+      {%- for paper in site.papers -%}
       <li>
         <h3>
-          <a class="post-link" href="{{ post.url | relative_url }}">
-            {{ post.title | escape }}
+          <a class="post-link" href="{{ paper.url | relative_url }}">
+            {{ paper.title | escape }}
           </a>
         </h3>
-        {% if post.coauthor %}
-        <span class="meta">with {{ post.coauthor }}</span>
+        {% if paper.coauthor %}
+        <span class="meta">with {{ paper.coauthor }}</span>
         {% endif %}
       </li>
       {%- endfor -%}
