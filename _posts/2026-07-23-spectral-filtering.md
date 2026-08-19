@@ -2,6 +2,7 @@
 layout: post
 title: "Much of linear least-squares learning is spectral filtering"
 date: 2026-07-23
+description: "OLS, ridge, PCR, gradient descent, momentum, and early stopping are all one estimator with a different filter function on the data spectrum."
 ---
 
 In the last post I noted that OLS, Ridge, and PCR can all be written as *spectral methods*. It turns out gradient-based methods fit the same mold as do most of their variants (learning-rate schedules, momentum, early stopping). Rather than a zoo of special cases, there is one common framework based on a choice of **filter function** $g$.  The right choice of $g$ boils down to the spectrum of your data and where the signal sits along it.
@@ -123,26 +124,6 @@ g_t(\sigma^2) = 1 - (1 - \eta\sigma^2)^{t}.
 $$
 
 For $0 < \eta\sigma^2 < 1$ this climbs from $0$ toward $1$, fastest in the large-$\sigma^2$ directions.
-
-### GD with a learning-rate schedule
-
-With per-step rates $\eta_1, \dots, \eta_t$, the residual along $u_i$ picks up a factor $(1 - \eta_s\sigma_i^2)$ at step $s$, and these accumulate:
-
-$$
-g_t(\sigma^2) = 1 - \prod_{s=1}^{t}(1 - \eta_s\sigma^2).
-$$
-
-Constant $\eta$ recovers $1 - (1-\eta\sigma^2)^t$. Each schedule is a choice of polynomial roots $1/\eta_s$.
-
-### Momentum (heavy ball)
-
-Run $\beta^{(t+1)} = \beta^{(t)} + \eta X^\top(y - X\beta^{(t)}) + \mu(\beta^{(t)} - \beta^{(t-1)})$. Along $u_i$ the residual $e_t$ follows a second-order recurrence,
-
-$$
-e_{t+1} = (1 + \mu - \eta\sigma_i^2)\,e_t - \mu\,e_{t-1},
-$$
-
-with characteristic roots $r_\pm(\sigma_i^2) = \tfrac12\big[(1+\mu-\eta\sigma_i^2) \pm \sqrt{(1+\mu-\eta\sigma_i^2)^2 - 4\mu}\big]$. Hence $e_t = c_+ r_+^t + c_- r_-^t$ with $c_\pm$ set by $e_0 = 1$ and the first step, and $g_t(\sigma^2) = 1 - (c_+ r_+^t + c_- r_-^t)$. It reduces to the plain-GD filter when $\mu = 0$.
 
 ### Risk decomposition
 

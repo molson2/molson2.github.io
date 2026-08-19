@@ -17,6 +17,12 @@ permalink: /blog/
         {{ post.date | date: "%B %-d, %Y" }}
       </p>
 
+      {%- if post.description %}
+      <p style="margin-top: 0;">
+        {{ post.description }}
+      </p>
+      {%- endif %}
+
       <p>
         <a href="{{ post.url | relative_url }}">Read more →</a>
       </p>

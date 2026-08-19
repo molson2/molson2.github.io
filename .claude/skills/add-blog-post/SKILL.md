@@ -21,8 +21,11 @@ enough to grab the title and find the image reference.
   layout: post
   title: "<title>"
   date: YYYY-MM-DD
+  description: "<one-sentence hook, shown in the /blog listing>"
   ---
   ```
+  The `description` is what appears under the title on the blog index. Write a
+  single sentence saying what the post actually finds, not what topic it covers.
 - Images are referenced with a `relative_url` filter, not a bare path:
   ```
   ![alt text]({{ "/assets/posts/<name>.png" | relative_url }})

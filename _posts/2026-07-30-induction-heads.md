@@ -2,6 +2,7 @@
 layout: post
 title: "Transformer Induction Heads"
 date: 2026-07-30
+description: "Training small transformers to copy from context, and watching induction heads form as a two-layer circuit."
 ---
 
 ## Introduction

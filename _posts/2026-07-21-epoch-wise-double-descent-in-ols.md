@@ -2,6 +2,7 @@
 layout: post
 title: "Epoch-wise double descent in OLS"
 date: 2026-07-21
+description: "Double descent in plain OLS, traced over training epochs rather than model size, where the implicit bias of gradient descent does the work."
 ---
 
 I was initially a bit skeptical of double descent in the OLS regression setting. In the usual exposition one plots test error against the number of predictors and gets the second descent right at the $p=n$ interpolation threshold. That always felt like a bit of a sleight of hand: once $p>n$, you have to specify which interpolating solution you're talking about. In practice this means baking in an inductive bias, such as the minimum-norm solution. As it happens, many of the optimization algorithms we already use—gradient descent, for example—produce exactly this bias.
