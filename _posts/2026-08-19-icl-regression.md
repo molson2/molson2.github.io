@@ -2,12 +2,12 @@
 layout: post
 title: "What Kind of a Statistician is a Transformer?"
 date: 2026-08-19
-description: "Differentiating an in-context fit with respect to its labels turns the transformer into a smoother matrix, with degrees of freedom you can read off directly."
+description: "A statistical view of in-context learning through Jacobians, smoothers, and effective degrees of freedom."
 ---
 
-In traditional supervised learning we specify the learning algorithm: linear regression minimizes squared error or a decision tree recursively chooses splits. The fitted function changes with the dataset, but the procedure that maps a dataset to that function is known.  In-context learning is different: the transformer takes a dataset in its context and produces a fitted function, but the procedure mapping one to the other was itself learned during pretraining. We know how the transformer was trained, but not necessarily what learning rule it learned to execute in context.
+In traditional supervised learning we specify the learning algorithm: linear regression minimizes squared error, a decision tree recursively chooses splits. The fitted function changes with the dataset, but the procedure that maps a dataset to that function is known. In-context learning is different: the transformer takes a dataset in its context and produces a fitted function, but the procedure mapping one to the other was itself learned during pretraining. We know how the transformer was trained, but not necessarily what learning rule it learned to execute in context.
 
-This post takes a behavioral approach to that question. Rather than starting with the transformer's internals, we treat its in-context fit as a statistical estimator and ask what kind of estimator it is. Because the transformer is differentiable, we can directly measure how each observed label influences each prediction.  On this toy problem, that exposes a classical statistical object.
+This post takes a behavioral approach to that question. Rather than starting with the transformer's internals, we treat its in-context fit as a statistical estimator and ask what kind of estimator it is. Because the transformer is differentiable, we can directly measure how each observed label influences each prediction. The resulting Jacobian gives us access to a classical statistical toolkit which has historicaly been used to study smoothers, including effective degrees of freedom and Stein's unbiased risk estimate (SURE).
 
 ## Jacobian
 
@@ -49,15 +49,21 @@ Every model has learned something local, but the shallow models are much more lo
 
 ## More Capacity, Fewer Degrees of Freedom
 
-For a linear smoother $\hat y=Sy$, $\operatorname{tr}(S)$ is its effective degrees of freedom[^1].  This quantity appears in the classical bias-variance accounting for smoothers, and the same quantity appears in Mallows' $C_p$, GCV, and SURE. For an ordinary linear model it reduces to the number of fitted parameters.
+The effective degrees of freedom of a differentiable estimator can be measured by how sensitive its fitted values are to the observed labels,
 
-[^1]: Note that computing a full Jacobian requires a backward pass through the model per output dimension. If we are only interested in its trace, we can approximate it more cheaply via Hutchinson's trace estimator. It is also worth noting that because forward passes tend to be cheap, transformer-based ICL functions are more amenable to leave-one-out analysis.
+$$\operatorname{df}(\hat y)=\sum_i \frac{\partial \hat y_i}{\partial y_i}=\operatorname{tr}(J).$$
 
-For the transformer we can compute the analogous quantity directly as $\operatorname{tr}(J)$. Large $\operatorname{tr}(J)$ means a more flexible, higher-variance fit; small $\operatorname{tr}(J)$ means more shrinkage and pooling.  Our models were trained on contexts of length 64, but at test time we can vary how much data they receive and watch the learned estimator change. With only a few points in context, the models keep their effective degrees of freedom small. As more data arrives, they support more complexity and $\operatorname{tr}(J)$ rises. The surprising part is the ordering across depths: the shallower models run at *higher* effective degrees of freedom than the deeper ones.
+For a linear smoother $\hat y=Sy$, this reduces to the familiar $\operatorname{tr}(S)$. This quantity appears in the classical bias-variance accounting for smoothers, and the same quantity appears in Mallows' $C_p$, GCV, and SURE. For an ordinary linear model it reduces to the number of fitted parameters.
+
+For the transformer we can compute $\operatorname{tr}(J)$ directly[^1]. Large $\operatorname{tr}(J)$ means a more flexible fit; small $\operatorname{tr}(J)$ means more shrinkage and pooling. Our models were trained on contexts of length 64, but at test time we can vary how much data they receive and watch the learned estimator change. With only a few points in context, the models keep their effective degrees of freedom small. As more data arrives, they support more complexity and $\operatorname{tr}(J)$ rises. The surprising part is the ordering across depths: the shallower models run at *higher* effective degrees of freedom than the deeper ones.
+
+The naive expectation might run the other way, since depth buys capacity and capacity sounds like complexity. But the capacity of the network and the complexity of the fitted function are different things. Here, depth appears to buy the ability to pool information across the context rather than lean heavily on the nearest few observations. The depth-8 model spends its additional capacity implementing something closer to the Bayes rule, and the Bayes rule is a *simpler* estimator in this sense. More network capacity produces fewer effective degrees of freedom.
+
+The training curves in the appendix suggest this ordering is not an artifact of where training stopped.
+
+[^1]: Strictly, $\operatorname{tr}(J)$ is the realized divergence; its expectation over the noise gives the effective degrees of freedom. Computing a full Jacobian requires a backward pass through the model per output dimension, but if we are only interested in its trace we can approximate it more cheaply via Hutchinson's trace estimator. It is also worth noting that because forward passes tend to be cheap, transformer-based ICL functions are particularly amenable to leave-one-out analysis.
 
 ![Effective degrees of freedom versus context length]({{ "/assets/posts/icl-regression-complexity.png" | relative_url }})
-
-The naive expectation might run the other way, since depth buys capacity and capacity sounds like complexity, but the capacity of the network and the complexity of the fitted function are different things. Here, depth appears to buy the ability to pool information across the context rather than lean heavily on the nearest few observations. The depth-8 model spends its additional capacity implementing something closer to the Bayes rule, and the Bayes rule is a *simpler* estimator in this sense. More network capacity produces fewer effective degrees of freedom.
 
 ## Risk Estimates
 
