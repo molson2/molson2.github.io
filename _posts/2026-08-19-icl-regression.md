@@ -61,7 +61,7 @@ The naive expectation might run the other way, since depth buys capacity and cap
 
 The training curves in the appendix suggest this ordering is not an artifact of where training stopped.
 
-[^1]: Strictly, $\operatorname{tr}(J)$ is the realized divergence; its expectation over the noise gives the effective degrees of freedom. Computing a full Jacobian requires a backward pass through the model per output dimension, but if we are only interested in its trace we can approximate it more cheaply via Hutchinson's trace estimator. It is also worth noting that because forward passes tend to be cheap, transformer-based ICL functions are particularly amenable to leave-one-out analysis.
+[^1]: Computing a full Jacobian requires a backward pass through the model per output dimension, but if we are only interested in its trace we can approximate it more cheaply via Hutchinson's trace estimator. It is also worth noting that because forward passes tend to be cheap, transformer-based ICL functions are particularly amenable to leave-one-out analysis.
 
 ![Effective degrees of freedom versus context length]({{ "/assets/posts/icl-regression-complexity.png" | relative_url }})
 
