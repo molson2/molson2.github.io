@@ -105,8 +105,6 @@ These are the classical analogue of IsoFLOP curves, U-shaped for the reason abov
 
 ![Optimal steps and data against compute, and the resulting compute-optimal frontier]({{ "/assets/posts/scaling-laws-fits.png" | relative_url }})
 
-Fitting the minima on log-log axes gives $0.40$ for $T^*$, $0.60$ for $D^*$, and a frontier of $C^{-0.40}$ — the predicted values, to the two digits the fit supports.
-
 ## Further Thoughts
 
 Everything above is written in terms of the filter $g$, and nothing forced $g$ to be the one plain gradient descent gives us.  Momentum, preconditioning, a learning rate schedule: any of these change $g_k(T)$, and so change the rate and the order in which spectral directions get learned.  There is no reason that has to reduce to moving $k_T$ around, but it does move the tradeoff, and it makes the choice of optimizer unusually explicit.  We are not only picking something that descends quickly, we are picking which directions get learned per unit of compute, and optimization speed and statistical speed are not the same objective.
