@@ -51,7 +51,7 @@ $$A_\infty = (\beta^{*\top}\beta^*)^{1/2} + \|\beta^*\| I,$$
 
 where $\beta^*$ is the least-squares solution. The learned term puts mass along the direction the task actually uses, which is what we wanted from a learned kernel. But the identity term does not go away, so the kernel never becomes fully task-dependent. It would be nice to point it more aggressively along the signal, and it turns out depth is what does that.  Finally, note that if we define a distance measure $d(x,z)^2 = (x-z)^\top A (x-z)$ part of the distance between two points is dictated by their distance in prediction space.
 
-With the help of GPT (results empirically simulated in the next section), we can ask what $A$ looks like with more depth, $f(x) = W_L\cdots W_1x$, again from a balanced initialization. Write $\beta^* = s\,u^\top$, splitting the solution into its length $s = \|\beta^*\|$ and its direction $u = \beta^*/\|\beta^*\|$. Then
+With the help of GPT (results empirically simulated in the next section), we can ask what $A$ looks like with more depth, $f(x) = W_L\cdots W_1x$, again from a balanced initialization. Write $\beta^\* = s\,u^\top$, splitting the solution into its length $s = \|\beta^\*\|$ and its direction $u = \beta^\*/\|\beta^\*\|$. Then
 
 $$A_\infty = s^{2(L-1)/L}\left[\,I + (L-1)\,uu^\top\right], \qquad \frac{\lambda_{\max}(A_\infty)}{\lambda_{\min}(A_\infty)} = L.$$
 
